@@ -2,15 +2,14 @@
 
 import { NextResponse } from "next/server";
 import dbConnect from "@/connect/mongodb";
-import Planarray from "@/models/Planarray";
+import PlanArray from "@/models/PlanArray";
 
 export async function GET() {
   await dbConnect();
 
   try {
 
-    const plans = await Planarray.find({});
-
+    const plans = await PlanArray.find({});
 
     return NextResponse.json({ success: true, data: plans }, { status: 200 });
   } catch (error) {

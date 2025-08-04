@@ -6,10 +6,11 @@ import Cookies from "js-cookie"
 import { motion, AnimatePresence } from "framer-motion"
 import { Edit, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
+import { Check , Star, Zap, Crown} from "lucide-react"
 import { usePlans } from "@/context/plans-context"
 import PlanEditModal from "@/components/plan-edit-modal"
-import type { Plan } from "@/data/plans"
+import { Plan } from "@/types/plan"
+
 
 export default function AdminAddPage() {
   const router = useRouter()
@@ -223,7 +224,9 @@ export default function AdminAddPage() {
                         }}
                         transition={{ duration: 0.6 }}
                       >
-                        <plan.icon className="h-8 w-8 text-white" />
+                          {plan.icon === "star" && <Star className="h-8 w-8 text-white" />}
+                    {plan.icon === "zap" && <Zap className="h-8 w-8 text-white" />}
+                    {plan.icon === "crown" && <Crown className="h-8 w-8 text-white" />}
                       </motion.div>
 
                       {/* Plan Name */}

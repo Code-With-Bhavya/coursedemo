@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/connect/mongodb";
-import Planarray from "@/models/Planarray";
+import PlanArray from "@/models/PlanArray";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     const { id, ...updatedData } = body;
 
     // Find the course by ID and update it
-    const course = await Planarray.findOneAndUpdate(
+    const course = await PlanArray.findOneAndUpdate(
         { id },
         {
           $set: {
