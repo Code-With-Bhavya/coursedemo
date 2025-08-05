@@ -8,3 +8,15 @@
 //     </Suspense>
 //   );
 // }
+import React from 'react'
+
+const page = () => {
+  return (
+    <div>
+      later
+    </div>
+  )
+}
+
+export default page
+
