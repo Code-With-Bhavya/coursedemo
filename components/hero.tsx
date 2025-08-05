@@ -105,7 +105,6 @@ export default function Hero() {
                             }}>
                             Build Skills. Unlock Opportunities.
                         </motion.span>
-                        <span className="block text-slate-800 mt-2">Achieve More with Every Course</span>
                     </h1>
                 </motion.div>
 
