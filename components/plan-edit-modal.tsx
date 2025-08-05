@@ -67,7 +67,7 @@ export default function PlanEditModal({ plan, isOpen, onClose }: PlanEditModalPr
     setIsSubmitting(true)
 
     try {
-      await updatePlan(plan.id, formData)
+      await updatePlan( formData)
       toast({
         title: "Plan Updated",
         description: "Plan has been successfully updated!",

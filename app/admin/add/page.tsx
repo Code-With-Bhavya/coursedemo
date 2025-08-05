@@ -57,6 +57,8 @@ export default function AdminAddPage() {
     show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, type: "spring", stiffness: 100 } },
   }
 
+  console.log("Plans context:", { plans, isLoading });
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 text-slate-900">
       <div className="max-w-7xl mx-auto p-6">
@@ -149,7 +151,7 @@ export default function AdminAddPage() {
                 animate="show"
                 className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12"
               >
-                {plans.map((plan, index) => (
+                {plans?.map((plan, index) => (
                   <motion.div
                     key={plan.id}
                     variants={item}
@@ -257,7 +259,7 @@ export default function AdminAddPage() {
                       {/* Features */}
                       <div className="space-y-4 mb-8 relative z-10">
                         <AnimatePresence>
-                          {plan.features.slice(0, 5).map((feature, featureIndex) => (
+                          {plan.features?.slice(0, 5).map((feature, featureIndex) => (
                             <motion.div
                               key={featureIndex}
                               className="flex items-start gap-3"
@@ -274,7 +276,7 @@ export default function AdminAddPage() {
                               <span className="text-slate-600 text-sm leading-relaxed">{feature}</span>
                             </motion.div>
                           ))}
-                          {plan.features.length > 5 && (
+                          {plan.features?.length > 5 && (
                             <div className="text-sm text-slate-500 pl-8">+{plan.features.length - 5} more features</div>
                           )}
                         </AnimatePresence>

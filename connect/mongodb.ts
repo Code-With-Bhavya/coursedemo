@@ -1,39 +1,32 @@
-import mongoose from "mongoose";
+// lib/mongo.ts
+import { MongoClient } from 'mongodb'
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
+const uri = process.env.MONGODB_URI as string
+const options = {}
 
-if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable in .env.local");
+let client
+let clientPromise: Promise<MongoClient>
+
+if (!process.env.MONGODB_URI) {
+  throw new Error('Please add your Mongo URI to .env.local')
 }
 
-// Fix for global cache in Next.js with TypeScript and ESLint
-interface MongooseGlobal {
-  mongooseCache: {
-    conn: typeof mongoose | null;
-    promise: Promise<typeof mongoose> | null;
-  };
+declare global {
+  // eslint-disable-next-line no-var
+  var _mongoClientPromise: Promise<MongoClient>
 }
 
-const globalWithMongoose = globalThis as typeof globalThis & MongooseGlobal;
-
-if (!globalWithMongoose.mongooseCache) {
-  globalWithMongoose.mongooseCache = {
-    conn: null,
-    promise: null,
-  };
-}
-
-async function dbConnect() {
-  if (globalWithMongoose.mongooseCache.conn) return globalWithMongoose.mongooseCache.conn;
-
-  if (!globalWithMongoose.mongooseCache.promise) {
-    globalWithMongoose.mongooseCache.promise = mongoose.connect(MONGODB_URI, {
-      dbName: "Coursewala", // optional, replace if needed
-    });
+if (process.env.NODE_ENV === 'development') {
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri, options)
+    global._mongoClientPromise = client.connect()
+    console.log('MongoDB client created in development mode');
+    
   }
-
-  globalWithMongoose.mongooseCache.conn = await globalWithMongoose.mongooseCache.promise;
-  return globalWithMongoose.mongooseCache.conn;
+  clientPromise = global._mongoClientPromise
+} else {
+  client = new MongoClient(uri, options)
+  clientPromise = client.connect()
 }
 
-export default dbConnect;
+export default clientPromise
